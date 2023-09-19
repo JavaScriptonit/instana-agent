@@ -1,0 +1,25 @@
+version: '3'
+services:
+  instana-agent:
+    image: sregistry.mts.ru/instana/agent:1.215.24
+    container_name: instana-agent
+    privileged: true
+    environment:
+      - INSTANA_AGENT_KEY=1xpjpYqZGNXxMMvM956czp
+      - INSTANA_AGENT_ENDPOINT=inst-app-d01t.mbrd.ru
+      - INSTANA_AGENT_ZONE=testing_practice
+      - INSTANA_AGENT_ENDPOINT_PORT=1444
+      - HOST_NAME=atst-kfk-v04t.mbrd.ru
+      - EUM_METADATA_HOST_NAME=my-host-name
+    volumes:
+      - /opt/instana/agent/etc/instana:/opt/instana/agent/etc/instana:ro
+      - /:/hostfs:ro
+      - /var/run:/hostfs/var/run:ro
+      - /sys:/hostfs/sys:ro
+      - /proc:/hostfs/proc:ro
+      - /var/log:/hostfs/var/log:ro
+      - /var/run/docker.sock:/hostfs/var/run/docker.sock:ro
+      - /var/lib/docker/containers:/hostfs/var/lib/docker/containers:ro
+    restart: always
+    pid: host
+    network_mode: host # Add network mode option
